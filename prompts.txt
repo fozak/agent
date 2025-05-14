@@ -1,0 +1,167 @@
+1) act as linux apps expert. I need to start identifying the major apps on my server whether they are running, installed and their health. Dont give comments, give 1 linux command to start with. I know nothing. 
+
+2) act as linux apps expert. I need to start identifying the major apps on my server whether they are running, installed and their health. On previous step I ran top and result is 
+top - 15:50:44 up 1 day, 16:07,  1 user,  load average: 0.04, 0.07, 0.04
+Tasks: 112 total,   1 running, 111 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :   1963.9 total,    778.7 free,    877.1 used,    308.1 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.    919.2 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                       
+    897 frappeu+  20   0   91820  18320   4152 S   0.3   0.9   2:48.74 redis-server                                  
+    907 frappeu+  20   0   75948   6760   4404 S   0.3   0.3   2:45.13 redis-server                                  
+      1 root      20   0  102140  10824   5940 S   0.0   0.5   0:19.93 systemd                                       
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.02 kthreadd                                      
+      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp                                        
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par_gp                                    
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 slub_flushwq                                  
+      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 netns                                         
+      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H-events_highpri                   
+     10 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_percpu_wq                                  
+     11 root      20   0       0      0      0 S   0.0   0.0   0:00.00 rcu_tasks_rude_                               
+     12 root      20   0       0      0      0 S   0.0   0.0   0:00.00 rcu_tasks_trace                               
+     13 root      20   0       0      0      0 S   0.0   0.0   0:16.25 ksoftirqd/0                                   
+     14 root      20   0       0      0      0 I   0.0   0.0   0:52.45 rcu_sched                                     
+     15 root      rt   0       0      0      0 S   0.0   0.0   0:00.85 migration/0                                   
+     16 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_inject/0                                 
+     18 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/0                                       
+     19 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kdevtmpfs                                     
+     20 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 inet_frag_wq                                  
+     21 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kauditd                                       
+     22 root      20   0       0      0      0 S   0.0   0.0   0:00.05 khungtaskd                                    
+     23 root      20   0       0      0      0 S   0.0   0.0   0:00.00 oom_reaper                                    
+     24 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 writeback                                     
+     25 root      20   0       0      0      0 S   0.0   0.0   0:08.37 kcompactd0                                    
+     26 root      25   5       0      0      0 S   0.0   0.0   0:00.00 ksmd                                          
+     27 root      39  19       0      0      0 S   0.0   0.0   0:00.00 khugepaged                                    
+     73 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kintegrityd                                   
+     74 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kblockd                                       
+     75 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 blkcg_punt_bio                                
+     76 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 tpm_dev_wq                                    
+
+
+
+airesponse 
+ps aux --sort=-%cpu | head -n 10
+
+---
+act as linux apps expert. I need to start identifying the major apps on my server whether they 
+are running, installed and their health. On previous step I ran 
+ps aux --sort=-%cpu | head -n 10
+ and result is 
+top - 15:50:44 up 1 day, 16:07,  1 user,  load average: 0.04, 0.07, 0.04
+Tasks: 112 total,   1 running, 111 sleeping,   0 stopped,   0 zombie
+
+frappeuser@ubuntu-s-1vcpu-2gb-nyc3-01:~$ ps aux --sort=-%cpu | head -n 10
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          85  0.1  0.0      0     0 ?        S    May12   3:17 [kswapd0]
+root         654  0.1  1.5 558816 30248 ?        Ssl  May12   3:06 /usr/bin/python3 /usr/bin/fail2ban-server -xf start
+redis        661  0.1  0.1  67244  3844 ?        Ssl  May12   4:24 /usr/bin/redis-server 127.0.0.1:6379
+frappeu+     897  0.1  0.9  91820 18392 ?        Sl   May12   2:48 /usr/bin/redis-server 127.0.0.1:13000
+frappeu+     907  0.1  0.3  75948  6724 ?        Sl   May12   2:45 /usr/bin/redis-server 127.0.0.1:11000
+root           1  0.0  0.5 102140 10824 ?        Ss   May12   0:19 /sbin/init
+root           2  0.0  0.0      0     0 ?        S    May12   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I<   May12   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I<   May12   0:00 [rcu_par_gp]
+
+
+dpkg --get-selections | grep -i "redis\|fail2ban\|python"
+fail2ban                                        install
+libpython3-dev:amd64                            install
+libpython3-stdlib:amd64                         install
+libpython3.10:amd64                             install
+libpython3.10-dev:amd64                         install
+libpython3.10-minimal:amd64                     install
+libpython3.10-stdlib:amd64                      install
+python-apt-common                               install
+python-babel-localedata                         install
+python3                                         install
+python3-apport                                  install
+python3-apt                                     install
+python3-attr                                    install
+python3-automat                                 install
+python3-babel                                   install
+python3-bcrypt                                  install
+python3-blinker                                 install
+python3-certifi                                 install
+python3-cffi-backend:amd64                      install
+python3-chardet                                 install
+python3-click                                   install
+python3-colorama                                install
+python3-commandnotfound                         install
+python3-configobj                               install
+python3-constantly                              install
+python3-cryptography                            install
+python3-dbus                                    install
+python3-debconf                                 install
+python3-debian                                  install
+python3-dev                                     install
+python3-distro                                  install
+python3-distro-info                             install
+python3-distupgrade                             install
+python3-distutils                               install
+python3-gdbm:amd64                              install
+python3-gi                                      install
+python3-hamcrest                                install
+python3-httplib2                                install
+python3-hyperlink                               install
+python3-idna                                    install
+python3-importlib-metadata                      install
+python3-incremental                             install
+python3-jeepney                                 install
+python3-jinja2                                  install
+python3-json-pointer                            install
+python3-jsonpatch                               install
+python3-jsonschema                              install
+python3-jwt                                     install
+python3-keyring                                 install
+python3-launchpadlib                            install
+python3-lazr.restfulclient                      install
+python3-lazr.uri                                install
+python3-lib2to3                                 install
+python3-magic                                   install
+python3-markupsafe                              install
+python3-minimal                                 install
+python3-more-itertools                          install
+python3-netifaces:amd64                         install
+python3-newt:amd64                              install
+python3-oauthlib                                install
+python3-openssl                                 install
+python3-packaging                               install
+python3-pexpect                                 install
+python3-pip                                     install
+python3-pip-whl                                 install
+python3-pkg-resources                           install
+python3-problem-report                          install
+python3-ptyprocess                              install
+python3-pyasn1                                  install
+python3-pyasn1-modules                          install
+python3-pyinotify                               install
+python3-pyparsing                               install
+python3-pyrsistent:amd64                        install
+python3-requests                                install
+python3-secretstorage                           install
+python3-serial                                  install
+python3-service-identity                        install
+python3-setuptools                              install
+python3-setuptools-whl                          install
+python3-six                                     install
+python3-software-properties                     install
+python3-systemd                                 install
+python3-twisted                                 install
+python3-tz                                      install
+python3-update-manager                          install
+python3-urllib3                                 install
+python3-venv                                    install
+python3-wadllib                                 install
+python3-wheel                                   install
+python3-yaml                                    install
+python3-zipp                                    install
+python3-zope.interface                          install
+python3.10                                      install
+python3.10-dev                                  install
+python3.10-minimal                              install
+python3.10-venv                                 install
+redis-server                                    install
+
+Prompt: if this is not major apps, give 1 command to identify more major
