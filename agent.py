@@ -7,12 +7,15 @@ import openai
 openai.api_key = 'your-api-key'
 
 def query_llm(prompt):
-    response = openai.Completion.create(
-        engine="gpt-3.5-turbo",  # or use the appropriate model
-        prompt=prompt,
+    response = openai.ChatCompletion.create(
+        model="gpt-4o-mini",  # Use the appropriate chat model
+        messages=[
+            {"role": "system", "content": "You are a helpful Linux diagnostic assistant."},
+            {"role": "user", "content": prompt}
+        ],
         max_tokens=2000
     )
-    return response.choices[0].text.strip()
+    return response.choices[0].message["content"].strip()
 
 class AutonomousAgent:
     def __init__(self, memory_file='memory.json'):
@@ -51,7 +54,10 @@ Determine:
 
 Only return a single Linux shell command per step. Do not explain anything.
 """
-        context = "\n".join([f"Step {i+1}:\nAction: {item['action']}\nResult: {item['result'][:300]}" for i, item in enumerate(self.history[-5:])])
+        context = "\n".join([
+            f"Step {i+1}:\nAction: {item['action']}\nResult: {item['result'][:300]}"
+            for i, item in enumerate(self.history[-5:])
+        ])
         prompt = f"""
 {goal}
 
@@ -74,7 +80,10 @@ What is the next best Linux command to run?
         self.save_memory()
 
     def goal_achieved(self):
-        summary = "\n".join([f"Action: {h['action']}\nResult: {h['result'][:200]}" for h in self.history])
+        summary = "\n".join([
+            f"Action: {h['action']}\nResult: {h['result'][:200]}"
+            for h in self.history
+        ])
         prompt = f"""
 Has the following investigation identified at least one major app (e.g., mysql, redis, nginx, etc.) and checked whether it is running and healthy?
 
