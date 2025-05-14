@@ -7,15 +7,12 @@ import openai
 openai.api_key = 'your-api-key'
 
 def query_llm(prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-4o-mini",  # Use the appropriate chat model
-        messages=[
-            {"role": "system", "content": "You are a helpful Linux diagnostic assistant."},
-            {"role": "user", "content": prompt}
-        ],
+    response = openai.completions.create(
+        model="gpt-4o-mini",  # Or other completion-based model
+        prompt=prompt,
         max_tokens=2000
     )
-    return response.choices[0].message["content"].strip()
+    return response.choices[0].text.strip()
 
 class AutonomousAgent:
     def __init__(self, memory_file='memory.json'):
@@ -26,7 +23,7 @@ class AutonomousAgent:
         try:
             with open(self.memory_file, 'r') as f:
                 return json.load(f)
-        except:
+        except FileNotFoundError:
             return []
 
     def save_memory(self):
